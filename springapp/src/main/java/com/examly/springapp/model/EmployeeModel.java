@@ -4,9 +4,10 @@ import javax.annotation.processing.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.empId;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Entity
 
 public class EmployeeModel {
     private long empId;
