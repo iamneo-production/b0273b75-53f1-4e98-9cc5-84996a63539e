@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.examly.springapp.model.AppliedJobModel;
-import com.examly.springapp.model.JobModel;
 import com.examly.springapp.repository.AppliedJobRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,5 +43,11 @@ public class AppliedJobController {
 		appliedJob.setEmployeeId(ajp.empId);
 		appliedJobRepository.save(appliedJob);
 		return "Saved" ;
+	}
+	
+	@RequestMapping(path="/home/{employeeId}")
+	@ResponseBody
+	public String getAppliedJobs(@PathVariable(value="employeeId") String employeeId){
+		return appliedJobRepository.findByEmployeeId(employeeId).toString();
 	}
 }

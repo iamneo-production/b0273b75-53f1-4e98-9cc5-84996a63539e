@@ -2,6 +2,8 @@ package com.examly.springapp.model;
 import java.util.Date;
 import javax.persistence.Id;
 
+import com.examly.springapp.utils.JsonUtils;
+
 import javax.persistence.Entity;
 
 
@@ -34,6 +36,11 @@ public class AppliedJobModel {
 	
 	public void setAppliedDate(Date appliedDate) {
 		this.appliedDate = appliedDate;
+	}
+	
+	@Override 
+	public String toString() {
+		return JsonUtils.toJson(this);
 	}
 	
 }
