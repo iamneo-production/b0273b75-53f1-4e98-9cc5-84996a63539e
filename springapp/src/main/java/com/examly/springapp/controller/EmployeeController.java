@@ -27,12 +27,12 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
-	@GetMapping("/admin/")
+	@GetMapping("/")
 	public List<EmployeeModel> getEmployee() {
 		return employeeRepository.findAll();
 	}
 
-	@GetMapping("/admin/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable(value = "id") String empId)
 			throws RecordNotFoundException {
 		EmployeeModel employee = employeeRepository.findById(empId)
@@ -40,12 +40,12 @@ public class EmployeeController {
 		return ResponseEntity.ok().body(employee);
 	}
 
-	@PostMapping("/admin/add")
+	@PostMapping("/add")
 	public EmployeeModel saveEmployee(@Valid @RequestBody EmployeeModel employee) {
 		return employeeRepository.save(employee);
 	}
 
-	@PutMapping("/admin/update/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<EmployeeModel> editEmployee(@PathVariable(value = "id") String empId,
 			@Valid @RequestBody EmployeeModel employeeDetails) throws RecordNotFoundException {
 		EmployeeModel employee = employeeRepository.findById(empId)
@@ -61,8 +61,8 @@ public class EmployeeController {
 		return ResponseEntity.ok(editEmployee);
 	}
 
-	@DeleteMapping("/admin/delete/{id}")
-	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long empId)
+	@DeleteMapping("/delete/{id}")
+	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") String empId)
 			throws RecordNotFoundException {
 		EmployeeModel employee = employeeRepository.findById(empId)
 				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + empId));

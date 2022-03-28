@@ -11,16 +11,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="employee")
+@Table(name="EmployeeModel")
 
 public class EmployeeModel {
     private String empId;
-    private String name;
     private String email;
     private String mobileNumber;
     private String role;
-    private boolean department;
+    private String department;
 	private String password;
+
+	public EmployeeModel(){
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationTye.AUTO)
@@ -29,14 +31,6 @@ public class EmployeeModel {
 	}
 	public void setEmpId(String empId) {
 		this.empId = empId;
-	}
-
-	@Column(name = "name", nullable = false)
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@Column(name = "mobileNumber", nullable = false)
@@ -64,10 +58,10 @@ public class EmployeeModel {
 	}
 
 	@Column(name = "department", nullable = false)
-	public boolean getDepartment() {
+	public String getDepartment() {
 		return department;
 	}
-	public void setDepartment(boolean department) {
+	public void setDepartment(String department) {
 		this.department = department;
 	}
 
@@ -80,6 +74,6 @@ public class EmployeeModel {
 	}
 	@Override
     public String toString() {
-        return "EmployeeModel [empId=" + empId + ", name=" + name + ", email=" + email   + ", mobileNumber=" + mobileNumber + ", role=" + role + ", department=" + department + ", password=" + pasword + "]";
+        return "EmployeeModel [empId=" + empId + ", email=" + email   + ", mobileNumber=" + mobileNumber + ", role=" + role + ", department=" + department + ", password=" + pasword + "]";
     }
 }

@@ -7,6 +7,6 @@ import com.examly.springapp.model.EmployeeModel;
  
 @Repository
 public interface EmployeeRepository
-        extends JpaRepository<EmployeeModel, Long> {
+        extends JpaRepository<EmployeeModel, String> {
  
 }
