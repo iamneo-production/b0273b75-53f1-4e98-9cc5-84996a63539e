@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/iamneo-production_b0273b75-53f1-4e98-9cc5-84996a63539e.iml" filepath="$PROJECT_DIR$/iamneo-production_b0273b75-53f1-4e98-9cc5-84996a63539e.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springapp/springapp.iml" filepath="$PROJECT_DIR$/springapp/springapp.iml" />
+    </modules>
+  </component>
+</project>
