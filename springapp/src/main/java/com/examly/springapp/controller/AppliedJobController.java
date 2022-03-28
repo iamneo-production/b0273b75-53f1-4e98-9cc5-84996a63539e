@@ -46,15 +46,16 @@ public class AppliedJobController {
 	}
 
 	@DeleteMapping(path="/appliedJobs/delete/{employeeId}")
-	public  void deleteAppliedJob(
+	public String deleteAppliedJob(
 			@PathVariable(value="employeeId") String employeeId,
-			@RequestParam(required = true) Long jobId) {
+			@RequestParam(required = true) String jobId) {
 
 		AppliedJobModel appliedJobModel =appliedJobRepository.findAppliedJob(employeeId, jobId)
 				.orElseThrow(() -> new IllegalStateException(
 						"The job application does not exist"
 				));
 		appliedJobRepository.delete(appliedJobModel);
+		return appliedJobModel.toString();
 
 	}
 }

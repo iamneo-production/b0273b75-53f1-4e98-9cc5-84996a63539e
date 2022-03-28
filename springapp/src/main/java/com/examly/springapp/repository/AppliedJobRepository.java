@@ -14,7 +14,7 @@ public interface AppliedJobRepository extends JpaRepository<AppliedJobModel, Lon
 	List<AppliedJobModel> findByEmployeeId(String employeeId);
 
 	@Query("SELECT j FROM AppliedJobModel j WHERE employeeId=employeeId AND jobId=jobId")
-	Optional<AppliedJobModel> findAppliedJob(String employeeId, Long jobId);
+	Optional<AppliedJobModel> findAppliedJob(String employeeId, String jobId);
 
 	
 }
