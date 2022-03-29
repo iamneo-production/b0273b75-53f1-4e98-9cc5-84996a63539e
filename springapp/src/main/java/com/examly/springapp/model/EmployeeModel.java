@@ -2,7 +2,6 @@ package com.examly.springapp.model;
 
 import java.lang.annotation.Inherited;
 
-import javax.annotation.processing.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,7 @@ public class EmployeeModel {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationTye.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
     public String getEmpId() {
 		return empId;
 	}
@@ -74,6 +73,6 @@ public class EmployeeModel {
 	}
 	@Override
     public String toString() {
-        return "EmployeeModel [empId=" + empId + ", email=" + email   + ", mobileNumber=" + mobileNumber + ", role=" + role + ", department=" + department + ", password=" + pasword + "]";
+        return "EmployeeModel [empId=" + empId + ", email=" + email   + ", mobileNumber=" + mobileNumber + ", role=" + role + ", department=" + department + ", password=" + password + "]";
     }
 }

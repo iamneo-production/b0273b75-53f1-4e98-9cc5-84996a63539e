@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,22 +39,21 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/add")
-	public EmployeeModel saveEmployee(@Valid @RequestBody EmployeeModel employee) {
+	public EmployeeModel saveEmployee(@RequestBody EmployeeModel employee) {
 		return employeeRepository.save(employee);
 	}
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<EmployeeModel> editEmployee(@PathVariable(value = "id") String empId,
-			@Valid @RequestBody EmployeeModel employeeDetails) throws RecordNotFoundException {
+			@RequestBody EmployeeModel employeeDetails) throws RecordNotFoundException {
 		EmployeeModel employee = employeeRepository.findById(empId)
 				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + empId));
 
 		employee.setEmail(employeeDetails.getEmail());
-		employee.setName(employeeDetails.getName());
         employee.setMobileNumber(employeeDetails.getMobileNumber());
         employee.setPassword(employeeDetails.getPassword());
         employee.setRole(employeeDetails.getRole());
-        employee.setDeartment(employeeDetails.getDepartment());
+        employee.setDepartment(employeeDetails.getDepartment());
 		final EmployeeModel editEmployee = employeeRepository.save(employee);
 		return ResponseEntity.ok(editEmployee);
 	}
