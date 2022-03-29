@@ -31,10 +31,10 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable(value = "id") String empId)
+	public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable(value = "id") String id)
 			throws RecordNotFoundException {
-		EmployeeModel employee = employeeRepository.findById(empId)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this empid :: " + empId));
+		EmployeeModel employee = employeeRepository.findById(id)
+				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this empid :: " + id));
 		return ResponseEntity.ok().body(employee);
 	}
 
@@ -44,12 +44,13 @@ public class EmployeeController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<EmployeeModel> editEmployee(@PathVariable(value = "id") String empId,
+	public ResponseEntity<EmployeeModel> editEmployee(@PathVariable(value = "id") String id,
 			@RequestBody EmployeeModel employeeDetails) throws RecordNotFoundException {
-		EmployeeModel employee = employeeRepository.findById(empId)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + empId));
+		EmployeeModel employee = employeeRepository.findById(id)
+				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + id));
 
-		employee.setEmail(employeeDetails.getEmail());
+		employee.setEmpId(employeeDetails.getEmpId());
+	    employee.setEmail(employeeDetails.getEmail());
         employee.setMobileNumber(employeeDetails.getMobileNumber());
         employee.setPassword(employeeDetails.getPassword());
         employee.setRole(employeeDetails.getRole());
@@ -59,10 +60,10 @@ public class EmployeeController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") String empId)
+	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") String id)
 			throws RecordNotFoundException {
-		EmployeeModel employee = employeeRepository.findById(empId)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + empId));
+		EmployeeModel employee = employeeRepository.findById(id)
+				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + id));
 
 		employeeRepository.delete(employee);
 		Map<String, Boolean> response = new HashMap<>();

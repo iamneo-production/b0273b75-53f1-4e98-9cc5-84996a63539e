@@ -13,6 +13,8 @@ import javax.persistence.Table;
 @Table(name="EmployeeModel")
 
 public class EmployeeModel {
+	private String id;
+	//username=empId
     private String empId;
     private String email;
     private String mobileNumber;
@@ -25,6 +27,14 @@ public class EmployeeModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Column(name = "empId", nullable = false)
     public String getEmpId() {
 		return empId;
 	}
