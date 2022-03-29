@@ -34,7 +34,7 @@ public class EmployeeController {
 	public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable(value = "id") String id)
 			throws RecordNotFoundException {
 		EmployeeModel employee = employeeRepository.findById(id)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this empid :: " + id));
+				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + id));
 		return ResponseEntity.ok().body(employee);
 	}
 
@@ -50,7 +50,7 @@ public class EmployeeController {
 				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + id));
 
 		employee.setEmpId(employeeDetails.getEmpId());
-	    employee.setEmail(employeeDetails.getEmail());
+		employee.setEmail(employeeDetails.getEmail());
         employee.setMobileNumber(employeeDetails.getMobileNumber());
         employee.setPassword(employeeDetails.getPassword());
         employee.setRole(employeeDetails.getRole());
