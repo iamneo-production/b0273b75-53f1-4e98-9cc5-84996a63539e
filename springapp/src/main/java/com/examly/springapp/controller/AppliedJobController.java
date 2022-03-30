@@ -45,6 +45,12 @@ public class AppliedJobController {
 		return appliedJobRepository.findByEmployeeId(employeeId).toString();
 	}
 
+	@RequestMapping(path = "/hr/allAppliedJobs")
+	@ResponseBody
+	public String getAllAppliedJobs() {
+		return appliedJobRepository.findAll().toString();
+	}
+
 	@DeleteMapping(path="/appliedJobs/delete/{employeeId}")
 	public String deleteAppliedJob(
 			@PathVariable(value="employeeId") String employeeId,

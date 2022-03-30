@@ -7,7 +7,7 @@ import com.examly.springapp.utils.JsonUtils;
 @Entity
 public class JobModel {
 	@Id
-	private long jobId;
+	private String jobId;
 	private String jobLocation;
 	private String jobTitle;
 	private String jobType;
@@ -15,11 +15,11 @@ public class JobModel {
 	private String salary;
 	private String experience;
 	
-	public Long getJobId() {
+	public String getJobId() {
 		return jobId;
 	}
 
-	public void setJobId(Long jobId) {
+	public void setJobId(String jobId) {
 		this.jobId = jobId;
 	}
 
@@ -31,7 +31,7 @@ public class JobModel {
 		this.jobTitle = jobTitle;
 	}
 
-	public String getjobLocation() {
+	public String getJobLocation() {
 		return jobLocation;
 	}
 
@@ -43,7 +43,7 @@ public class JobModel {
 		return jobType;
 	}
 
-	public void setEmail(String jobType) {
+	public void setJobType(String jobType) {
 		this.jobType = jobType;
 	}
 
@@ -70,11 +70,11 @@ public class JobModel {
 	public void setExperience(String experience) {
 		this.experience = experience;
 	}
-	
-	@Override 
+
+	@Override
 	public String toString() {
 		return JsonUtils.toJson(this);
 	}
 
-	
+
 }
