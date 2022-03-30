@@ -31,25 +31,24 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable(value = "id") String id)
+	public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable(value = "id") String empId)
 			throws RecordNotFoundException {
-		EmployeeModel employee = employeeRepository.findById(id)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + id));
+		EmployeeModel employee = employeeRepository.findById(empId)
+				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id : " + empId));
 		return ResponseEntity.ok().body(employee);
 	}
 
 	@PostMapping("/add")
-	public EmployeeModel saveEmployee(@RequestBody EmployeeModel employee) {
+	public EmployeeModel saveEmployee(@RequestBody EmployeeModel employeeDetails) {
 		return employeeRepository.save(employee);
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<EmployeeModel> editEmployee(@PathVariable(value = "id") String id,
+	public ResponseEntity<EmployeeModel> editEmployee(@PathVariable(value = "id") String empId,
 			@RequestBody EmployeeModel employeeDetails) throws RecordNotFoundException {
-		EmployeeModel employee = employeeRepository.findById(id)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + id));
+		EmployeeModel employee = employeeRepository.findById(empId)
+				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + empId));
 
-		employee.setEmpId(employeeDetails.getEmpId());
 		employee.setEmail(employeeDetails.getEmail());
         employee.setMobileNumber(employeeDetails.getMobileNumber());
         employee.setPassword(employeeDetails.getPassword());
@@ -60,10 +59,10 @@ public class EmployeeController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") String id)
+	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") String empId)
 			throws RecordNotFoundException {
-		EmployeeModel employee = employeeRepository.findById(id)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + id));
+		EmployeeModel employee = employeeRepository.findById(empId)
+				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + empId));
 
 		employeeRepository.delete(employee);
 		Map<String, Boolean> response = new HashMap<>();
