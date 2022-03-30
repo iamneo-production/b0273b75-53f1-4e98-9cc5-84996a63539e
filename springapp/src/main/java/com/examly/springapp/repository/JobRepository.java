@@ -6,6 +6,6 @@ import com.examly.springapp.model.JobModel;
 
 
 @Repository
-public interface JobRepository extends JpaRepository<JobModel, Long>{
+public interface JobRepository extends JpaRepository<JobModel, String>{
 
 }
