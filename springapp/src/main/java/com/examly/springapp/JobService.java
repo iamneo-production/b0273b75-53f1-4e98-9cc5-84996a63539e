@@ -1,14 +1,70 @@
 package com.examly.springapp;
+import java.util.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@Service
 public class JobService {
+
+    @Autowired
+    private JobModelRepository jobModelRepository;
+
     public List<JobModel> getJobs(){
+        List<JobModel> jobs= new ArrayList<>();
+        jobModelRepository.findAll().forEach(jobs::add);
         return jobs;
     }
-    public Jobs jobEditData(String id) {
-        return jobs.stream().filter(t->t.getId().equals(id)).findFirst().get();
+
+    public JobModel jobEditData(String id) {
+        return jobModelRepository.findById(id).orElse(null);
     }
-   public void jobSave(Jobs job) {
-       jobs.add(job);
-       
-   }
+
+    public void jobSave(JobModel job) {
+        jobModelRepository.save(job);
+
+    }
+
+    public void deleteJobs(String id) {
+        jobModelRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void updateJob(String jobId, String jobTitle, String jobLocation, String jobType, String jobDesc, String salary, String experience) {
+
+        JobModel jobModel = jobModelRepository.findById(jobId)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Job with id " + jobId + " does not exist"
+                ));
+
+        if(jobTitle != null && jobTitle.length() > 0 && !Objects.equals(jobModel.getJobTitle(), jobTitle)) {
+            jobModel.setJobTitle(jobTitle);
+        }
+
+        if(jobLocation != null && jobLocation.length() > 0 && !Objects.equals(jobModel.getJobLocation(), jobLocation)) {
+            jobModel.setJobLocation(jobLocation);
+        }
+
+        if(jobType != null && jobType.length() > 0 && !Objects.equals(jobModel.getJobType(), jobType)) {
+            jobModel.setJobType(jobType);
+        }
+
+        if(jobDesc != null && jobDesc.length() > 0 && !Objects.equals(jobModel.getJobDesc(), jobDesc)) {
+            jobModel.setJobDesc(jobDesc);
+        }
+
+        if(salary != null && salary.length() > 0 && !Objects.equals(jobModel.getSalary(), salary)) {
+            jobModel.setSalary(salary);
+        }
+
+        if(experience != null && experience.length() > 0 && !Objects.equals(jobModel.getExperience(), experience)) {
+            jobModel.setExperience(experience);
+        }
+    }
 }
+

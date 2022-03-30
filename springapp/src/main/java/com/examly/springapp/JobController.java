@@ -1,31 +1,46 @@
 package com.examly.springapp;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class TopicController {
- 
+public class JobController {
+
 	@Autowired
 	private JobService jobService;
-	
+
 	@RequestMapping("/hr")
 	public List<JobModel> getJobs() {
 		return jobService.getJobs();
 	}
+
 	@RequestMapping("/hr/jobEdit/{id}")
-	public Topic getTopic(@PathVariable String id) {
+	public JobModel getJob(@PathVariable String id) {
 		return jobService.jobEditData(id);
 	}
+
 	@RequestMapping(method=RequestMethod.POST,value="/hr/addJob")
 	public void addTopic(@RequestBody JobModel jobModel) {
 		jobService.jobSave(jobModel);
 	}
+
+	@RequestMapping(method=RequestMethod.DELETE,value="/hr/delete/{id}")
+	public void jobDelete(@PathVariable String id) {
+		jobService.deleteJobs(id);
+	}
+
+	@PutMapping(path = "/hr/jobEdit/{jobId}")
+	public void updateJob (
+			@PathVariable("jobId") String jobId,
+			@RequestParam(required = false) String jobTitle,
+			@RequestParam(required = false) String jobLocation,
+			@RequestParam(required = false) String jobType,
+			@RequestParam(required = false) String jobDesc,
+			@RequestParam(required = false) String salary,
+			@RequestParam(required = false) String experience
+			) {
+		jobService.updateJob(jobId, jobTitle, jobLocation, jobType, jobDesc, salary, experience);
+	}
 }
- 
+

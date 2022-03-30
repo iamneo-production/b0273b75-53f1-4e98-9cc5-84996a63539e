@@ -1,2 +1,12 @@
-package com.examly.springapp;public interface JobModelRepository {
+package com.examly.springapp;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface JobModelRepository extends JpaRepository<JobModel, String>{
+
 }
