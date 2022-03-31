@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TopicController {
+public class JobController {
  
 	@Autowired
 	private JobService jobService;
@@ -19,13 +19,20 @@ public class TopicController {
 	public List<JobModel> getJobs() {
 		return jobService.getJobs();
 	}
+	
 	@RequestMapping("/hr/jobEdit/{id}")
-	public Topic getTopic(@PathVariable String id) {
+	public JobModel getJob(@PathVariable String id) {
 		return jobService.jobEditData(id);
 	}
+	
 	@RequestMapping(method=RequestMethod.POST,value="/hr/addJob")
 	public void addTopic(@RequestBody JobModel jobModel) {
 		jobService.jobSave(jobModel);
+	}
+	
+	@RequestMapping(method=RequestMethod.DELETE,value="/hr/delete/{id}")
+	public void jobtDelete(@PathVariable String id) {
+		 jobService.deleteJobs(id);
 	}
 }
  

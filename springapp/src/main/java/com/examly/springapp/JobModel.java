@@ -1,16 +1,23 @@
 package com.examly.springapp;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class JobModel{
     
+	@Id
     private String jobId;
     private String jobTitle;
     private String jobLocation;
     private String jobType;
     private String jobDesc;
     private String salary;
+    private String experience;
 
 
-    public JobModel(String jobId,String jobTitle, String jobLocation, String jobType,String jobDesc,String salary){
+    
+	public JobModel(String jobId,String jobTitle, String jobLocation, String jobType,String jobDesc,String salary,String experience){
     super();
 	this.jobId = jobId;
 	this.jobTitle = jobTitle;
@@ -18,6 +25,7 @@ public class JobModel{
     this.jobType = jobType;
 	this.jobDesc = jobDesc;
 	this.salary = salary;
+	this.experience = experience;
 
     }
     public String getJobTitle() {
@@ -56,5 +64,11 @@ public class JobModel{
     public void setSalary(String salary) {
         this.salary = salary;
     }
+    public String getExperience() {
+		return experience;
+	}
+	public void setExperience(String experience) {
+		this.experience = experience;
+	}
     
 }
