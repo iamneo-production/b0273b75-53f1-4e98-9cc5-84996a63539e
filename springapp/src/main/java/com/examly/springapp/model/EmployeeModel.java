@@ -1,6 +1,9 @@
 package com.examly.springapp.model;
 
-import java.lang.annotation.Inherited;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,10 +12,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name="EmployeeModel")
 
 public class EmployeeModel {
+    private long id;
 	//username=empId
     private String empId;
     private String email;
@@ -21,11 +29,16 @@ public class EmployeeModel {
     private String department;
 	private String password;
 
-	public EmployeeModel(){
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+    @Column(name = "empId", nullable = false)
     public String getEmpId() {
 		return empId;
 	}
@@ -72,8 +85,5 @@ public class EmployeeModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Override
-    public String toString() {
-        return "EmployeeModel [empId=" + empId + ", email=" + email   + ", mobileNumber=" + mobileNumber + ", role=" + role + ", department=" + department + ", password=" + password + "]";
-    }
+
 }
