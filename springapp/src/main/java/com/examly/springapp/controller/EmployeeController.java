@@ -3,6 +3,7 @@ package com.examly.springapp.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.examly.springapp.exception.RecordNotFoundException;
 import com.examly.springapp.repository.EmployeeRepository;
@@ -58,18 +60,18 @@ public class EmployeeController {
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody EmployeeModel employee) {
         EmployeeModel newEmployee = employeeRepository
                 .save(EmployeeModel.builder()
-                        .name(employee.getEmpId())
-                        .role(employee.getEmail())
-						.role(employee.getMobileNumber())
-						.role(employee.getDepartment())
+                        .empId(employee.getEmpId())
+                        .email(employee.getEmail())
+						.mobileNumber(employee.getMobileNumber())
+						.department(employee.getDepartment())
 						.role(employee.getRole())
-						.role(employee.getPassword())
+						.password(employee.getPassword())
                         .build());
         return new ResponseEntity<>(newEmployee, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Employee> editEmployee(@PathVariable("id") long employeeId, @RequestBody EmployeeModel employee) {
+    public ResponseEntity<EmployeeModel> editEmployee(@PathVariable("id") long employeeId, @RequestBody EmployeeModel employee) {
 
         //check if employee exist in database
         EmployeeModel empObj = getEmpRec(employeeId);

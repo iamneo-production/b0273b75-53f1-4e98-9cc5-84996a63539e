@@ -29,8 +29,6 @@ public class EmployeeModel {
     private String department;
 	private String password;
 
-	public EmployeeModel(){
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
