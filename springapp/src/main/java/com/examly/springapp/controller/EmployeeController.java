@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,51 +24,93 @@ import com.examly.springapp.model.EmployeeModel;
 @RequestMapping("/admin")
 public class EmployeeController {
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	EmployeeRepository employeeRepository;
 
 	@GetMapping("/")
-	public List<EmployeeModel> getEmployee() {
-		return employeeRepository.findAll();
+	public ResponseEntity<List<EmployeeModel>> getEmployee() {
+		try{
+			return new ResponseEntity<>(employeeRepository.findAll(), HttpStatus.OK);
+		}catch (Exception e){
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable(value = "id") Long employeeId)
-			throws RecordNotFoundException {
-		EmployeeModel employee = employeeRepository.findById(employeeId)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id : " + employeeId));
-		return ResponseEntity.ok().body(employee);
-	}
+    public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable("id") long employeeId) {
+        try {
+            //check if employee exist in database
+            EmployeeModel empObj = getEmpRec(employeeId);
 
-	@PostMapping("/add")
-	public EmployeeModel saveEmployee(@RequestBody EmployeeModel employee) {
-		return employeeRepository.save(employee);
-	}
+            if (empObj != null) {
+                return new ResponseEntity<>(empObj, HttpStatus.OK);
+            }
 
-	@PutMapping("/update/{id}")
-	public ResponseEntity<EmployeeModel> editEmployee(@PathVariable(value = "id") Long employeeId,
-			@RequestBody EmployeeModel employeeDetails) throws RecordNotFoundException {
-		EmployeeModel employee = employeeRepository.findById(employeeId)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + employeeId));
-        
-        employee.setEmpId(employeeDetails.getEmpId());
-		employee.setEmail(employeeDetails.getEmail());
-        employee.setMobileNumber(employeeDetails.getMobileNumber());
-        employee.setPassword(employeeDetails.getPassword());
-        employee.setRole(employeeDetails.getRole());
-        employee.setDepartment(employeeDetails.getDepartment());
-		final EmployeeModel editedEmployee = employeeRepository.save(employee);
-		return ResponseEntity.ok(editedEmployee);
-	}
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-	@DeleteMapping("/delete/{id}")
-	public Map<String, Boolean> deleteEmployee(@PathVariable(value = "id") Long employeeId)
-			throws RecordNotFoundException {
-		EmployeeModel employee = employeeRepository.findById(employeeId)
-				.orElseThrow(() -> new RecordNotFoundException("Employee not found for this id :: " + employeeId));
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-		employeeRepository.delete(employee);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return response;
-	}
+    }
+
+
+    @PostMapping("/add")
+    public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody EmployeeModel employee) {
+        EmployeeModel newEmployee = employeeRepository
+                .save(EmployeeModel.builder()
+                        .name(employee.getEmpId())
+                        .role(employee.getEmail())
+						.role(employee.getMobileNumber())
+						.role(employee.getDepartment())
+						.role(employee.getRole())
+						.role(employee.getPassword())
+                        .build());
+        return new ResponseEntity<>(newEmployee, HttpStatus.OK);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Employee> editEmployee(@PathVariable("id") long employeeId, @RequestBody EmployeeModel employee) {
+
+        //check if employee exist in database
+        EmployeeModel empObj = getEmpRec(employeeId);
+
+        if (empObj != null) {
+            empObj.setEmpId(employee.getEmpId());
+			empObj.setEmail(employee.getEmail());
+			empObj.setMobileNumber(employee.getMobileNumber());
+			empObj.setDepartment(employee.getDepartment());
+            empObj.setRole(employee.getRole());
+			empObj.setPassword(employee.getPassword());
+            return new ResponseEntity<>(employeeRepository.save(empObj), HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable("id") long employeeId) {
+        try {
+            //check if employee exist in database
+            EmployeeModel emp = getEmpRec(employeeId);
+
+            if (emp != null) {
+                employeeRepository.deleteById(employeeId);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private EmployeeModel getEmpRec(long employeeId) {
+        Optional<EmployeeModel> empObj = employeeRepository.findById(employeeId);
+
+        if (empObj.isPresent()) {
+            return empObj.get();
+        }
+        return null;
+    }
 }
