@@ -23,12 +23,12 @@ import com.examly.springapp.repository.EmployeeRepository;
 import com.examly.springapp.model.EmployeeModel;
 
 @RestController
-@RequestMapping("/singup/admin")
+@RequestMapping("/singup")
 public class EmployeeController {
 	@Autowired
 	EmployeeRepository employeeRepository;
 
-	@GetMapping("/")
+	@GetMapping("/admin/")
 	public ResponseEntity<List<EmployeeModel>> getEmployee() {
 		try{
 			return new ResponseEntity<>(employeeRepository.findAll(), HttpStatus.OK);
@@ -37,7 +37,7 @@ public class EmployeeController {
 		}
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/admin/{id}")
     public ResponseEntity<EmployeeModel> getEmployeeById(@PathVariable("id") long employeeId) {
         try {
             //check if employee exist in database
@@ -56,7 +56,7 @@ public class EmployeeController {
     }
 
 
-    @PostMapping("/add")
+    @PostMapping("/admin/add")
     public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody EmployeeModel employee) {
         EmployeeModel newEmployee = employeeRepository
                 .save(EmployeeModel.builder()
@@ -70,7 +70,7 @@ public class EmployeeController {
         return new ResponseEntity<>(newEmployee, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/admin/update/{id}")
     public ResponseEntity<EmployeeModel> editEmployee(@PathVariable("id") long employeeId, @RequestBody EmployeeModel employee) {
 
         //check if employee exist in database
@@ -89,7 +89,7 @@ public class EmployeeController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/admin/delete/{id}")
     public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable("id") long employeeId) {
         try {
             //check if employee exist in database
