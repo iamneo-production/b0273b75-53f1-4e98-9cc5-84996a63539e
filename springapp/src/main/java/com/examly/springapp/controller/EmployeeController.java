@@ -23,7 +23,7 @@ import com.examly.springapp.repository.EmployeeRepository;
 import com.examly.springapp.model.EmployeeModel;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("https//localhost:8080/singup/admin")
 public class EmployeeController {
 	@Autowired
 	EmployeeRepository employeeRepository;
